@@ -1,0 +1,10 @@
+@mixin center($margin) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: $margin;
+}
+
+.main-card-dashboard {
+    @include center(5%);
+}
