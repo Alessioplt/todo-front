@@ -1,8 +1,8 @@
 import React from "react";
 import {Tabs, Tab, Card, CardBody} from "@nextui-org/react";
-import Login from "../../components/core/Login";
+import Login from "../public/Login";
 import './HomePage.scss'
-import SignUp from "../../components/core/SignUp";
+import SignUp from "./SignUp";
 function HomePage() {
     return (
         <div className="flex w-full flex-col main-card-home" >

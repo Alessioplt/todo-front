@@ -36,7 +36,7 @@ export const categoryTODO = createSlice({
             const newCategory: Category = {
                 id: action.payload.id,
                 title: action.payload.title,
-                itemNumber: action.payload.itemNumber
+                itemNumber: 0
             };
             state.categories = [...state.categories, newCategory];
         },

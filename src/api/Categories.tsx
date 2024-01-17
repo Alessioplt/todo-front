@@ -1,51 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import gql from 'graphql-tag';
-import axios from "axios";
 import axiosInstance from "./Service";
-import client from "../oldApi/Service";
-
-
-export const GET_ALL = gql`
-    query{
-    getAllCategories{
-        id,
-        title,
-        userId
-    }
-}
-`
-
-export const ADD = gql`
-    mutation categoryCreate($input: CategoryCreateInput!) {
-  categoryCreate(input: $input) {
-    id,
-    title,
-    userId
-  }
-}
-    `
-
-export const DELETE = gql`
-    mutation removeOne($id: String!) {
-  removeOne (id: $id) {
-    title
-  }
-}
-    `
-
-export const EDIT = gql`
-    mutation editCategory($id: String!, $title: String!) {
-    editCategory(id: $id, title: $title) {
-        id,
-        title
-  }
-}
-    `
 
 export const fetchCategories = createAsyncThunk(
     'categories/getAll',
     async (thunkAPI) => {
-        console.log("fetching categories")
         try {
             const result = await axiosInstance.post('/graphql', {
                 query: `
@@ -98,8 +57,20 @@ export const addCategoryApi = createAsyncThunk(
 export const deleteCategoryApi = createAsyncThunk(
     'categories/remove',
     async (id, thunkAPI) => {
-        await client.mutate({mutation: DELETE, variables: {"id": id}})
-        return id
+        const result = await axiosInstance.post('/graphql', {
+            query: `
+                mutation removeOne($id: String!) {
+                    removeOne (id: $id) {
+                        title
+                    }
+                }
+            `,
+            variables: {
+                input: {
+                    id: id
+                }
+            }
+        });
     }
 )
 
@@ -110,8 +81,23 @@ interface EditCategoryParams {
 
 export const editCategoryApi = createAsyncThunk<number, EditCategoryParams>(
     'categories/edit',
-    async (params: EditCategoryParams, thunkAPI) => {
-        const result = await client.mutate({ mutation: EDIT, variables: { id: params.id, title: params.title } });
-        return result.data.editCategory;
+    async (params, thunkAPI) => {
+        const result = await axiosInstance.post('/graphql', {
+            query: `
+                mutation editCategory($id: String!, $title: String!) {
+                    editCategory(id: $id, title: $title) {
+                        id,
+                        title
+                    }
+                }
+            `,
+            variables: {
+                input: {
+                    id: params.id,
+                    title: params.title
+                }
+            }
+        });
+        return result.data.data.editCategory;
     }
 );

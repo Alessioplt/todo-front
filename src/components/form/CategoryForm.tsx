@@ -2,11 +2,12 @@ import {Button, Input} from "@nextui-org/react";
 import React, {useState} from "react";
 import {addCategory} from "../../redux/CategoryTODO";
 import {useDispatch} from "react-redux";
+import {addCategoryApi} from "../../api/Categories";
 
 function CategoryForm() {
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        dispatch(addCategory({id: Date.now(), title: title, itemNumber: 0})); // Use a unique ID for the category
+        dispatch(addCategoryApi({title: title}));
         setTitle(''); // Reset the input field
     };
 

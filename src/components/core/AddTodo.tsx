@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {Card, CardHeader, CardBody, Divider, Input, Button} from "@nextui-org/react";
 import { useDispatch } from 'react-redux';
-import {addCategory, changeTodoNumber} from '../../redux/CategoryTODO';
+import {changeTodoNumber} from '../../redux/CategoryTODO';
+import {addCategoryApi} from "../../api/Categories";
 import {addTODO} from "../../redux/ListTODO";
 import {useAppSelector} from "../../redux/hooks";
 
