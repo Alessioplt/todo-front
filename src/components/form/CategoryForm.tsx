@@ -1,19 +1,18 @@
 import {Button, Input} from "@nextui-org/react";
 import React, {useState} from "react";
-import {addCategory} from "../../redux/CategoryTODO";
 import {useDispatch} from "react-redux";
-import {addCategoryApi} from "../../api/Categories";
+import {addCategoryApi} from "../../redux/CategoryApi";
 
 function CategoryForm() {
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
-        dispatch(addCategoryApi({title: title}));
-        setTitle(''); // Reset the input field
-    };
-
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>()
     const [title, setTitle] = useState('');
 
+
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+        dispatch(addCategoryApi(title));
+        setTitle(''); // Reset the input field
+    };
     return (
         <form onSubmit={handleSubmit}>
             <Input

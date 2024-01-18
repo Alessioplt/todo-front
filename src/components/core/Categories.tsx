@@ -5,7 +5,7 @@ import AddCategory from "./AddCategory";
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { updateCategory } from "../../redux/ListTODO";
 import {useNavigate} from "react-router";
-import {fetchCategories} from "../../api/Categories";
+import {fetchCategories} from "../../redux/CategoryApi";
 
 
 interface Category {
@@ -32,8 +32,6 @@ function Categories() {
     const handleTabChange = (newValue: React.Key) => {
         if (typeof newValue === 'string') {
             setSelectedTab(newValue);
-            // Assuming you want to update the category based on the title, you can find the category by title
-            console.log(newValue)
             dispatch(updateCategory(Number(newValue)));
         }
     };

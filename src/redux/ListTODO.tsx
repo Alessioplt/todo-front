@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {addCategoryApi, deleteCategoryApi, editCategoryApi, fetchCategories} from "./CategoryApi";
 
 let id: number = 10;
 
@@ -6,38 +7,20 @@ interface Todo {
     id: number;
     text: string;
     checked: boolean;
-    category: number;
+    category: string;
 }
 
 interface State {
     todos: Todo[];
-    activeCategory: number;
+    activeCategory: string;
     todosToShow: Todo[];
     search: string;
 }
 
 const initialState: State = {
     todos: [
-        {
-            id: 1,
-            text: "Mock Todo 1",
-            checked: false,
-            category: 1
-        },
-        {
-            id: 2,
-            text: "Mock Todo 2",
-            checked: true,
-            category: 2
-        },
-        {
-            id: 3,
-            text: "Mock Todo 3",
-            checked: true,
-            category: 1
-        }
     ],
-    activeCategory: -1,
+    activeCategory: "",
     todosToShow: [],
     search: '',
 };
@@ -54,7 +37,7 @@ export const ListTODO = createSlice({
             }
         },
         addTODO: (state, action: PayloadAction<{ text: string, checked: boolean }>) => {
-            if (state.activeCategory !== -1) {
+            if (state.activeCategory !== "") {
                 state.todos = [
                     ...state.todos,
                     {
@@ -64,7 +47,6 @@ export const ListTODO = createSlice({
                         category: state.activeCategory
                     }
                 ];
-                id += 1;
                 ListTODO.caseReducers.updateTodoShow(state);
             }
         },
@@ -74,7 +56,7 @@ export const ListTODO = createSlice({
         },
         deleteCategoryTodo: (state, action: PayloadAction<number>) => {
             state.todos = state.todos.filter(item => item.category !== action.payload);
-            state.activeCategory = -1;
+            state.activeCategory = "";
             ListTODO.caseReducers.updateTodoShow(state);
         },
         deleteTodo: (state, action: PayloadAction<number>) => {
@@ -95,6 +77,7 @@ export const ListTODO = createSlice({
             state.search = action.payload;
             ListTODO.caseReducers.updateTodoShow(state);
         },
+
         /*editCategoryTodo: (state, action: PayloadAction<[number, string]>) => {
             let rename = state.todos.find(item => item.category === action.payload[0]);
             while (rename !== undefined) {
@@ -103,7 +86,14 @@ export const ListTODO = createSlice({
             }
             ListTODO.caseReducers.updateTodoShow(state);
         },*/
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(addTODOApi.fulfilled, (state, action) => {
+            if (action.payload && action.payload.data.getAllCategories) {
+                state.categories = action.payload.data.getAllCategories;
+            }
+        });
+    },
 });
 
 export const {

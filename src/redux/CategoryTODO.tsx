@@ -1,11 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-    addCategoryApi,
-    fetchCategories,
-    deleteCategoryApi,
-    editCategoryApi,
-} from '../api/Categories';
-import {addTODO} from "./ListTODO";
+import { createSlice } from '@reduxjs/toolkit';
+import {addCategoryApi, deleteCategoryApi, editCategoryApi, fetchCategories} from "./CategoryApi";
 
 interface Category {
     id: number;
@@ -19,9 +13,6 @@ interface CategoryState {
 
 const initialState: CategoryState = {
     categories: [
-        { id: 1, title: 'Default Category 1', itemNumber: 2 },
-        { id: 2, title: 'Default Category 2', itemNumber: 1 },
-        // Add more default categories here
     ],
 };
 export const categoryTODO = createSlice({
@@ -33,6 +24,8 @@ export const categoryTODO = createSlice({
             fetchCategories();
         },
         addCategory: (state, action) => {
+            console.log("$$debug")
+            console.log(action.payload)
             const newCategory: Category = {
                 id: action.payload.id,
                 title: action.payload.title,
@@ -58,8 +51,8 @@ export const categoryTODO = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
-            if (action.payload && action.payload.getAllCategories) {
-                state.categories = action.payload.getAllCategories;
+            if (action.payload && action.payload.data.getAllCategories) {
+                state.categories = action.payload.data.getAllCategories;
             }
         });
         builder.addCase(addCategoryApi.fulfilled, (state, action) => {

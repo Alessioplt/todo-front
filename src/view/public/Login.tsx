@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {Card, CardBody, CardFooter, Divider, Link, Input, Button} from "@nextui-org/react";
 import {useNavigate} from "react-router";
 import axiosInstance, {updateAxiosInstance} from "../../api/Service";
+import {LOGIN} from "../../api/Auth";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -21,17 +22,7 @@ function Login() {
     const loginUser = async (email: string, password: string) => {
         try {
             const response = await axiosInstance.post('graphql', {
-                query: `
-        mutation login($input: LoginUserInput!) {
-          login(loginUserInput: $input) {
-            user {
-              email,
-              id
-            },
-            access_token
-          }
-        }
-      `,
+                query: LOGIN,
                 variables: {
                     input: {
                         email: email,
