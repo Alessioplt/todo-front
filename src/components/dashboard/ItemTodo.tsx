@@ -3,14 +3,13 @@ import TrashIcon from "../../icons/trash";
 import React from "react";
 import {checkTODO, deleteTodo} from "../../redux/ListTODO";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {changeTodoNumber} from "../../redux/CategoryTODO";
 import DeleteTodoSingle from "../core/DeleteTodoSingle";
 
 interface todo {
     id: number;
     text: string;
     checked: boolean;
-    category: number;
+    category: string;
 }
 
 function ItemTodo({ item }: { item: todo }) {
@@ -23,7 +22,6 @@ function ItemTodo({ item }: { item: todo }) {
     const deleteItem = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         console.log("deleting todo", item)
-        dispatch(changeTodoNumber({id: item.category, itemNumber: todoItem.todosToShow.length-1}))
         dispatch(deleteTodo(item.id))
     };
 

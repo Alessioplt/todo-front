@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {addCategoryApi, deleteCategoryApi, editCategoryApi, fetchCategories} from "./CategoryApi";
+import {addTodoApi} from "./TodoApi";
 
 let id: number = 10;
 
@@ -51,10 +51,10 @@ export const ListTODO = createSlice({
             }
         },
         deleteCheckedTodo: (state) => {
-            state.todos = state.todos.filter(item => (item.checked === false || item.category !== state.activeCategory));
+            state.todos = state.todos.filter(item => (!item.checked || item.category !== state.activeCategory));
             ListTODO.caseReducers.updateTodoShow(state);
         },
-        deleteCategoryTodo: (state, action: PayloadAction<number>) => {
+        deleteCategoryTodo: (state, action: PayloadAction<string>) => {
             state.todos = state.todos.filter(item => item.category !== action.payload);
             state.activeCategory = "";
             ListTODO.caseReducers.updateTodoShow(state);
@@ -66,7 +66,7 @@ export const ListTODO = createSlice({
                 ListTODO.caseReducers.updateTodoShow(state);
             }
         },
-        updateCategory: (state, action: PayloadAction<number>) => {
+        updateCategory: (state, action: PayloadAction<string>) => {
             state.activeCategory = action.payload;
             ListTODO.caseReducers.updateTodoShow(state);
         },
@@ -88,9 +88,9 @@ export const ListTODO = createSlice({
         },*/
     },
     extraReducers: (builder) => {
-        builder.addCase(addTODOApi.fulfilled, (state, action) => {
+        builder.addCase(addTodoApi.fulfilled, (state, action) => {
             if (action.payload && action.payload.data.getAllCategories) {
-                state.categories = action.payload.data.getAllCategories;
+                state.todos = action.payload.data;
             }
         });
     },

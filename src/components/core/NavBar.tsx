@@ -1,7 +1,5 @@
 import React from "react";
 import {Navbar, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-import {addTODO} from "../../redux/ListTODO";
-import {changeTodoNumber} from "../../redux/CategoryTODO";
 function NavBar() {
     const handleSubmit = () => {
         sessionStorage.removeItem('token');

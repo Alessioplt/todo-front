@@ -4,7 +4,6 @@ import {addCategoryApi, deleteCategoryApi, editCategoryApi, fetchCategories} fro
 interface Category {
     id: number;
     title: string;
-    itemNumber : number;
 }
 
 interface CategoryState {
@@ -29,7 +28,6 @@ export const categoryTODO = createSlice({
             const newCategory: Category = {
                 id: action.payload.id,
                 title: action.payload.title,
-                itemNumber: 0
             };
             state.categories = [...state.categories, newCategory];
         },
@@ -41,12 +39,6 @@ export const categoryTODO = createSlice({
         },
         deleteCategory: (state, action) => {
             state.categories = state.categories.filter((category) => category.id !== action.payload.id);
-        },
-        changeTodoNumber: (state, action) => {
-            const categoryIndex = state.categories.findIndex((category) => category.id === action.payload.id);
-            if (categoryIndex !== -1) {
-                state.categories[categoryIndex].itemNumber = action.payload.itemNumber;
-            }
         },
     },
     extraReducers: (builder) => {
@@ -71,7 +63,6 @@ export const categoryTODO = createSlice({
 export const {  refresh,
                 addCategory,
                 editCategory,
-                deleteCategory,
-                changeTodoNumber} = categoryTODO.actions;
+                deleteCategory,} = categoryTODO.actions;
 
 export default categoryTODO.reducer;

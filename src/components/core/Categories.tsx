@@ -11,7 +11,6 @@ import {fetchCategories} from "../../redux/CategoryApi";
 interface Category {
     id: number;
     title: string;
-    itemNumber: number;
 }
 
 function Categories() {
@@ -32,7 +31,7 @@ function Categories() {
     const handleTabChange = (newValue: React.Key) => {
         if (typeof newValue === 'string') {
             setSelectedTab(newValue);
-            dispatch(updateCategory(Number(newValue)));
+            dispatch(updateCategory(newValue));
         }
     };
 
@@ -49,7 +48,6 @@ function Categories() {
                     key={category.id}
                     title={
                         <div className="flex items-center space-x-2">
-                            <Chip size="sm" variant="faded">{category.itemNumber}</Chip>
                             <span>‎ ‎ {category.title}</span>
                         </div>
                     }
