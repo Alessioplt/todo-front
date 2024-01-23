@@ -13,7 +13,7 @@ function AddTodo() {
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        dispatch(addTODO({ text: title, checked: false}));
+        //dispatch(addTODO({ text: title, checked: false}));
         setTitle(''); // Reset the input field
     };
     return (

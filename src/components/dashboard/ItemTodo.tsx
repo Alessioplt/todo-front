@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import DeleteTodoSingle from "../core/DeleteTodoSingle";
 
 interface todo {
-    id: number;
+    id: string;
     text: string;
     checked: boolean;
     category: string;
@@ -16,13 +16,13 @@ function ItemTodo({ item }: { item: todo }) {
     const todoItem = useAppSelector((state) => state.todo)
     const dispatch = useAppDispatch()
     const setIsSelected = () => {
-        dispatch(checkTODO(item.id))
+        //dispatch(checkTODO(item.id))
     };
 
     const deleteItem = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         console.log("deleting todo", item)
-        dispatch(deleteTodo(item.id))
+        //dispatch(deleteTodo(item.id))
     };
 
     return (

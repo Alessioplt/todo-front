@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {addTodoApi} from "./TodoApi";
+import {addTodoApi, fetchTODOByCategoryID} from "./TodoApi";
+import listTodo from "../components/dashboard/ListTodo";
 
 let id: number = 10;
 
 interface Todo {
-    id: number;
+    id: string;
     text: string;
     checked: boolean;
     category: string;
@@ -29,19 +30,21 @@ export const ListTODO = createSlice({
     name: 'todo list',
     initialState,
     reducers: {
-        checkTODO: (state, action: PayloadAction<number>) => {
+        checkTODO: (state, action: PayloadAction<string>) => {
             let todoFind = state.todos.find(item => item.id === action.payload);
             if (todoFind) {
                 todoFind.checked = !todoFind.checked;
                 ListTODO.caseReducers.updateTodoShow(state);
             }
         },
-        addTODO: (state, action: PayloadAction<{ text: string, checked: boolean }>) => {
+        addTODO: (state, action: PayloadAction<{ text: string, checked: boolean, id: string }>) => {
+            console.log("addTODO", action)
+            console.log(state)
             if (state.activeCategory !== "") {
                 state.todos = [
                     ...state.todos,
                     {
-                        id: id,
+                        id: action.payload.id,
                         text: action.payload.text,
                         checked: action.payload.checked,
                         category: state.activeCategory
@@ -59,7 +62,7 @@ export const ListTODO = createSlice({
             state.activeCategory = "";
             ListTODO.caseReducers.updateTodoShow(state);
         },
-        deleteTodo: (state, action: PayloadAction<number>) => {
+        deleteTodo: (state, action: PayloadAction<string>) => {
             const toDelete = state.todos.find(item => item.id === action.payload);
             if (toDelete) {
                 state.todos = state.todos.filter(item => item !== toDelete);
@@ -88,9 +91,14 @@ export const ListTODO = createSlice({
         },*/
     },
     extraReducers: (builder) => {
-        builder.addCase(addTodoApi.fulfilled, (state, action) => {
-            if (action.payload && action.payload.data.getAllCategories) {
-                state.todos = action.payload.data;
+        builder.addCase(fetchTODOByCategoryID.fulfilled, (state, action) => {
+            if (action.payload && action.payload.data.getTodoFromCategory) {
+                for (let i = 0; i < action.payload.data.getTodoFromCategory.length; i++) {
+                    console.log (action.payload.data.getTodoFromCategory[i]);
+                    ListTODO.caseReducers.addTODO(state,{ text: String(action.payload.data.getTodoFromCategory[i].description), //type: string
+                        checked: false,
+                        id: String(action.payload.data.getTodoFromCategory[i].id)})
+                }
             }
         });
     },

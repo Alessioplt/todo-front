@@ -1,13 +1,16 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosInstance from "../api/Service";
-import {ADD, DELETE, EDIT, GET_ALL} from "../api/Todo";
+import {ADD, DELETE, EDIT, GET_ALL_FROM_ID} from "../api/Todo";
 
-export const fetchTODO = createAsyncThunk(
-    'categories/getAll',
-    async (thunkAPI) => {
+export const fetchTODOByCategoryID = createAsyncThunk(
+    'todo/getAll',
+    async (categoryId: string, thunkAPI) => {
         try {
             const result = await axiosInstance.post('/graphql', {
-                query: GET_ALL,
+                query: GET_ALL_FROM_ID,
+                variables: {
+                    categoryId: categoryId
+                }
             });
             console.log("Resultat:", result.data);
             return result.data;
@@ -21,6 +24,32 @@ export const fetchTODO = createAsyncThunk(
 
     }
 )
+
+/*export const fetchTODO = createAsyncThunk(
+    'todo/getAll',
+    async (categoryId: string, thunkAPI) => {
+        try {
+            const result = await axiosInstance.post('/graphql', {
+                query: GET_ALL,
+                variables: {
+                    limit: limit,
+                    offset: offset,
+                    searchTerm: searchTerm,
+                    categoryId: categoryId
+                }
+            });
+            console.log("Resultat:", result.data);
+            return result.data;
+        }
+        catch (e) {
+            console.log("failed", e)
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('userId')
+            return null
+        }
+
+    }
+)*/
 
 export const addTodoApi = createAsyncThunk(
     'todo/add',

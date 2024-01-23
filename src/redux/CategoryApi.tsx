@@ -1,16 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosInstance from "../api/Service";
-import {ADD, DELETE, EDIT, GET_ALL} from "../api/Categories";
+import {ADD, DELETE, EDIT, getAll} from "../api/Categories";
 
 export const fetchCategories = createAsyncThunk(
     'categories/getAll',
     async (thunkAPI) => {
         try {
-            const result = await axiosInstance.post('/graphql', {
-                query: GET_ALL,
-            });
-            console.log("Resultat:", result.data);
-            return result.data;
+            const {data} = await getAll();
+            return data;
         }
         catch (e) {
             console.log("failed", e)
@@ -18,14 +15,13 @@ export const fetchCategories = createAsyncThunk(
             sessionStorage.removeItem('userId')
             return null
         }
-
     }
 )
+
 
 export const addCategoryApi = createAsyncThunk(
     'categories/add',
     async (title: string, thunkAPI) => {
-        console.log("testing", title)
         const result = await axiosInstance.post('/graphql', {
             query: ADD,
             variables: {
@@ -34,7 +30,6 @@ export const addCategoryApi = createAsyncThunk(
                 }
             }
         });
-        console.log("result", result)
         return result.data.data.categoryCreate;
     }
 );

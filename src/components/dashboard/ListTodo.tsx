@@ -1,13 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Card, CardBody, CardFooter, Divider, Link, Button, Checkbox, Input} from "@nextui-org/react";
-import TrashIcon from "../../icons/trash";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {addCategory} from "../../redux/CategoryTODO";
-import {addTODO, checkTODO, deleteTodo} from "../../redux/ListTODO";
 import ItemTodo from "./ItemTodo";
+import {fetchTODOByCategoryID} from "../../redux/TodoApi";
 
 interface todo {
-    id: number;
+    id: string;
     text: string;
     checked: boolean;
     category: number;
@@ -19,6 +17,15 @@ function ListTodo() {
         checked: boolean;
     }
     const todoItem = useAppSelector((state) => state.todo)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        if (sessionStorage.getItem('token') === null) {
+            console.log("not logged in")
+        }
+        else {
+            dispatch(fetchTODOByCategoryID(todoItem.activeCategory))
+        }
+    }, []);
 
 
     return (

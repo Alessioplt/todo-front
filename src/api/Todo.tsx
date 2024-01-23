@@ -16,6 +16,17 @@ export const GET_ALL = `
 }
 `
 
+export const GET_ALL_FROM_ID = `
+    query getTodoFromCategory($categoryId: String!) {
+    getTodoFromCategory(categoryId: $categoryId) {
+      id
+      title
+      description
+      status
+    }
+  }
+`
+
 export const ADD = `
     mutation todoCreate {
   todoCreate (input: {

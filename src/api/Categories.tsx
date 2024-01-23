@@ -1,3 +1,5 @@
+import gql from 'graphql-tag';
+import axiosInstance from "./Service";
 export const GET_ALL = `
     query{
     getAllCategories{
@@ -7,8 +9,13 @@ export const GET_ALL = `
     }
 }
 `
+export const getAll = async () => {
+    return axiosInstance.post('/graphql', {
+        query: GET_ALL,
+    });
+}
 
-export const ADD = `
+export const ADD = gql`
     mutation categoryCreate($input: CategoryCreateInput!) {
   categoryCreate(input: $input) {
     id,
