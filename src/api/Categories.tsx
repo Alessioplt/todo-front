@@ -9,7 +9,8 @@ export const GET_ALL = `
     }
 }
 `
-export const getAll = async () => {
+
+export const getAllCategory = async () => {
     return axiosInstance.post('/graphql', {
         query: GET_ALL,
     });
@@ -24,6 +25,16 @@ export const ADD = gql`
   }
 }
     `
+export const addCategory = async (title: string) => {
+    return axiosInstance.post('/graphql', {
+        query: ADD,
+        variables: {
+            input: {
+                title: title
+            }
+        }
+    });
+}
 
 export const DELETE = `
     mutation removeOne($id: String!) {
@@ -31,7 +42,18 @@ export const DELETE = `
     title
   }
 }
-    `
+`
+
+export const deleteCategory = async (id: string) => {
+    return axiosInstance.post('/graphql', {
+        query: DELETE,
+        variables: {
+            input: {
+                id: id
+            }
+        }
+    });
+}
 
 export const EDIT = `
     mutation editCategory($id: String!, $title: String!) {
@@ -41,3 +63,15 @@ export const EDIT = `
   }
 }
     `
+
+export const editCategory = async (title: string, id:string) => {
+    return axiosInstance.post('/graphql', {
+        mutation: EDIT,
+        variables: {
+            input: {
+                id: id,
+                title: title
+            }
+        }
+    });
+}

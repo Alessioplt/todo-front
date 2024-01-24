@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
     /*headers: {
@@ -18,6 +19,27 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
+        return Promise.reject(error);
+    }
+);
+
+axiosInstance.interceptors.response.use(
+
+    (response) => {
+        if (response.data && response.data.errors) {
+            const error = response.data.errors[0];
+
+            if (error.extensions && error.extensions.code === 'UNAUTHENTICATED') {
+                console.error('Unauthorized error:', error.message);
+                //navigate("/")
+                return Promise.reject(error.message);
+            }
+        }
+        return response;
+    },
+    (error) => {
+        console.error('Request failed with error:', error);
+        //navigate("/")
         return Promise.reject(error);
     }
 );

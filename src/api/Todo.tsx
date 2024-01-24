@@ -1,3 +1,5 @@
+import axiosInstance from "./Service";
+
 export const GET_ALL = `
     query  getAllTodos($limit: number, $offset: number, $searchTerm: String!, $categoryId: String!){
   getAllTodos(limit: $limit, offset: $offset, searchTerm: $searchTerm, categoryId: $categoryId){
@@ -16,6 +18,20 @@ export const GET_ALL = `
 }
 `
 
+export const getAllTodo = async (limit: number, offset: number, searchTerm: string, categoryId: string) => {
+    return axiosInstance.post('/graphql', {
+        query: GET_ALL,
+        variables: {
+            input: {
+                limit: limit,
+                offset: offset,
+                searchTerm: searchTerm,
+                categoryId: categoryId
+            }
+        }
+    });
+}
+
 export const GET_ALL_FROM_ID = `
     query getTodoFromCategory($categoryId: String!) {
     getTodoFromCategory(categoryId: $categoryId) {
@@ -26,35 +42,65 @@ export const GET_ALL_FROM_ID = `
     }
   }
 `
-
+export const getAllTodoId = async (categoryId: string) => {
+    return axiosInstance.post('/graphql', {
+        query: GET_ALL_FROM_ID,
+        variables: {
+            input: {
+                categoryId: categoryId
+            }
+        }
+    });
+}
 export const ADD = `
-    mutation todoCreate {
-  todoCreate (input: {
-    title: "Task 1", 
-    description: "Learn Spanish", 
-    status: "0",
-    categoryId: "cb9ee2d5-2475-4eb0-9c97-b79c8be216b9"
-  }) {
-    id,
-    title,
-    description,
-    status,
-    userId,
-    categoryId
-  }
+    mutation TodoCreate($title: String!, $description: String!, $status: String!, $categoryId: String!) {
+    todoCreate(input: {
+        title: $title,
+        description: $description,
+        status: $status,
+        categoryId: $categoryId
+    }) {
+        id
+        title
+        description
+        status
+        userId
+        categoryId
+    }
 }
     `
-
+export const addTodo = async (title: string, description: string, status: string, categoryId: string) => {
+    return axiosInstance.post('/graphql', {
+        query: ADD,
+        variables: {
+            input: {
+                title: title,
+                description: description,
+                status: status,
+                categoryId: categoryId
+            }
+        }
+    });
+}
 export const DELETE = `
-    mutation removeOne {
-  removeOne (id: "5f0e8add-fc36-4036-b2de-d03f57b2d9c1") {
-    title,
-    description,
-    status
-  }
+    mutation RemoveOne($id: String!) {
+    removeOne(id: $id) {
+        title
+        description
+        status
+    }
 }
     `
-
+export const deleteTODO = async (id: string) => {
+    return axiosInstance.post('/graphql', {
+        query: DELETE,
+        variables: {
+            input: {
+                id: id
+            }
+        }
+    });
+}
 export const EDIT = `
     mutation updateTodo {
   updateTodo (input: {
@@ -69,3 +115,16 @@ export const EDIT = `
   }
 }
     `
+export const editTODO = async (title: string, description: string, status: string, categoryId: string) => {
+    return axiosInstance.post('/graphql', {
+        query: EDIT,
+        variables: {
+            input: {
+                title: title,
+                description: description,
+                status: status,
+                categoryId: categoryId
+            }
+        }
+    });
+}

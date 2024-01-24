@@ -95,9 +95,9 @@ export const ListTODO = createSlice({
             if (action.payload && action.payload.data.getTodoFromCategory) {
                 for (let i = 0; i < action.payload.data.getTodoFromCategory.length; i++) {
                     console.log (action.payload.data.getTodoFromCategory[i]);
-                    ListTODO.caseReducers.addTODO(state,{ text: String(action.payload.data.getTodoFromCategory[i].description), //type: string
-                        checked: false,
-                        id: String(action.payload.data.getTodoFromCategory[i].id)})
+                    //ListTODO.caseReducers.addTODO(state,{ text: String(action.payload.data.getTodoFromCategory[i].description), //type: string
+                    //    checked: false,
+                    //    id: String(action.payload.data.getTodoFromCategory[i].id)})
                 }
             }
         });

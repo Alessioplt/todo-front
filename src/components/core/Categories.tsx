@@ -4,7 +4,6 @@ import Todo from "./Todo";
 import AddCategory from "./AddCategory";
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { updateCategory } from "../../redux/ListTODO";
-import {useNavigate} from "react-router";
 import {fetchCategories} from "../../redux/CategoryApi";
 
 
@@ -14,19 +13,12 @@ interface Category {
 }
 
 function Categories() {
-    const navigate = useNavigate();
     const [selectedTab, setSelectedTab] = useState("");
 
     const category = useAppSelector((state) => state.category)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        if (sessionStorage.getItem('token') === null) {
-            console.log("not logged in")
-            navigate("/")
-        }
-        else {
-            dispatch(fetchCategories())
-        }
+        dispatch(fetchCategories())
     }, []);
     const handleTabChange = (newValue: React.Key) => {
         if (typeof newValue === 'string') {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Card, CardBody, CardFooter, Divider, Link, Input, Button} from "@nextui-org/react";
 import {useNavigate} from "react-router";
 import axiosInstance, {updateAxiosInstance} from "../../api/Service";
-import {LOGIN} from "../../api/Auth";
+import {login, LOGIN} from "../../api/Auth";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -20,27 +20,10 @@ function Login() {
     };
 
     const loginUser = async (email: string, password: string) => {
-        try {
-            const response = await axiosInstance.post('graphql', {
-                query: LOGIN,
-                variables: {
-                    input: {
-                        email: email,
-                        password: password,
-                    },
-                },
-            });
-
-            const data = response.data.data.login;
-
-            // Handle your data here
-            sessionStorage.setItem('token', data.access_token);
-            sessionStorage.setItem('userId', data.user.id);
-            updateAxiosInstance(true);
-        } catch (error) {
-            // Handle errors here
-            console.error('Error during login:', error);
-        }
+        const {data} = await login(email, password)
+        sessionStorage.setItem('token', data.data.login.access_token);
+        sessionStorage.setItem('userId', data.data.login.user.id);
+        updateAxiosInstance(true);
     };
 
 
