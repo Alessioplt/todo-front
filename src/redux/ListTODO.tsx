@@ -20,6 +20,24 @@ interface State {
 
 const initialState: State = {
     todos: [
+        {
+            id: '1',
+            text: 'Complete React tutorial',
+            checked: false,
+            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
+        },
+        {
+            id: '2',
+            text: 'Buy groceries',
+            checked: false,
+            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
+        },
+        {
+            id: '3',
+            text: 'Exercise for 30 minutes',
+            checked: false,
+            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
+        },
     ],
     activeCategory: "",
     todosToShow: [],
@@ -74,6 +92,7 @@ export const ListTODO = createSlice({
             ListTODO.caseReducers.updateTodoShow(state);
         },
         updateTodoShow: (state) => {
+            console.log(state.todos)
             state.todosToShow = state.todos.filter(item => item.category === state.activeCategory && item.text.includes(state.search));
         },
         updateSearch: (state, action: PayloadAction<string>) => {

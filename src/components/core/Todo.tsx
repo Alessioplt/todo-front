@@ -1,22 +1,19 @@
 import React from "react";
-import {Card, CardHeader, CardBody, Divider, Input, Button} from "@nextui-org/react";
+import {Button, Card, CardBody, CardFooter, Divider, Link, Modal, ModalContent, useDisclosure} from "@nextui-org/react";
 import ListTodo from "../dashboard/ListTodo";
-import AddTodo from "./AddTodo";
+import TodoDeleteDone from "../dashboard/TodoDeleteDone";
+import TodoAdd from "../dashboard/TodoAdd";
 
 function Todo() {
     return (
-        <Card className="max-w-[75%]">
-            <CardHeader>
-                <div className="w-full flex flex-col gap-4 items-center">
-                <h1>TODO</h1>
-                <Input type="text" label="Search..."></Input>
-                    <AddTodo></AddTodo>
-                </div>
-            </CardHeader>
-            <CardBody>
-                <ListTodo></ListTodo>
-            </CardBody>
+        <Card className="max-w-[400px]">
+            <ListTodo/>
             <Divider/>
+            <CardFooter>
+                <TodoDeleteDone/>
+                <Divider orientation="vertical" />
+                <TodoAdd/>
+            </CardFooter>
         </Card>
     );
 }

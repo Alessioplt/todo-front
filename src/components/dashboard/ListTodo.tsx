@@ -29,20 +29,11 @@ function ListTodo() {
 
 
     return (
-        <Card className="max-w-[400px]">
-            <CardBody>
-                {todoItem.todosToShow.map((todo) => (
-                    <ItemTodo item={todo} />
-                ))}
-            </CardBody>
-            <Divider/>
-            <CardFooter>
-                <Link
-                    href="">
-                    Delete Todo's dones
-                </Link>
-            </CardFooter>
-        </Card>
+        <CardBody>
+            {todoItem.todosToShow.map((todo) => (
+                <ItemTodo item={todo} />
+            ))}
+        </CardBody>
     );
 }
 

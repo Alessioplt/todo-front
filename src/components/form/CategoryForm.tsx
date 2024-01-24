@@ -1,18 +1,23 @@
-import {Button, Input} from "@nextui-org/react";
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
-import {addCategoryApi} from "../../redux/CategoryApi";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button, Input } from "@nextui-org/react";
+import { addCategoryApi } from "../../redux/CategoryApi";
 
-function CategoryForm() {
-    const dispatch = useDispatch<any>()
-    const [title, setTitle] = useState('');
+interface CategoryFormProps {
+    onClose: () => void;
+}
 
+function CategoryForm({ onClose }: CategoryFormProps) {
+    const dispatch = useDispatch<any>();
+    const [title, setTitle] = useState("");
 
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
         dispatch(addCategoryApi(title));
-        setTitle(''); // Reset the input field
+        setTitle("");
+        onClose();
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <Input
@@ -21,11 +26,11 @@ function CategoryForm() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <Button type="submit" color="primary">Add</Button>
+            <Button type="submit" color="primary">
+                Add
+            </Button>
         </form>
-
     );
 }
 
 export default CategoryForm;
-

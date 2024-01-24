@@ -10,7 +10,6 @@ function AddCategory() {
                 <HeaderTitle label={'Ajouter une catégorie'} />
             </CardHeader>
             <CardBody>
-                <CategoryForm />
             </CardBody>
             <Divider/>
         </Card>
