@@ -20,24 +20,6 @@ interface State {
 
 const initialState: State = {
     todos: [
-        {
-            id: '1',
-            text: 'Complete React tutorial',
-            checked: false,
-            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
-        },
-        {
-            id: '2',
-            text: 'Buy groceries',
-            checked: false,
-            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
-        },
-        {
-            id: '3',
-            text: 'Exercise for 30 minutes',
-            checked: false,
-            category: 'eed4c7af-d163-4986-b4ea-30d9dbddadd1',
-        },
     ],
     activeCategory: "",
     todosToShow: [],
@@ -56,19 +38,23 @@ export const ListTODO = createSlice({
             }
         },
         addTODO: (state, action: PayloadAction<{ text: string, checked: boolean, id: string }>) => {
-            console.log("addTODO", action)
-            console.log(state)
             if (state.activeCategory !== "") {
-                state.todos = [
-                    ...state.todos,
-                    {
-                        id: action.payload.id,
-                        text: action.payload.text,
-                        checked: action.payload.checked,
-                        category: state.activeCategory
-                    }
-                ];
-                ListTODO.caseReducers.updateTodoShow(state);
+                // Check if todo with the same ID already exists
+                const todoExists = state.todos.some(todo => todo.id === action.payload.id);
+                if (!todoExists) {
+                    state.todos = [
+                        ...state.todos,
+                        {
+                            id: action.payload.id,
+                            text: action.payload.text,
+                            checked: action.payload.checked,
+                            category: state.activeCategory
+                        }
+                    ];
+                    ListTODO.caseReducers.updateTodoShow(state);
+                } else {
+                    console.log(`Todo with ID ${action.payload.id} already exists.`);
+                }
             }
         },
         deleteCheckedTodo: (state) => {
@@ -92,7 +78,6 @@ export const ListTODO = createSlice({
             ListTODO.caseReducers.updateTodoShow(state);
         },
         updateTodoShow: (state) => {
-            console.log(state.todos)
             state.todosToShow = state.todos.filter(item => item.category === state.activeCategory && item.text.includes(state.search));
         },
         updateSearch: (state, action: PayloadAction<string>) => {
@@ -113,10 +98,13 @@ export const ListTODO = createSlice({
         builder.addCase(fetchTODOByCategoryID.fulfilled, (state, action) => {
             if (action.payload && action.payload.data.getTodoFromCategory) {
                 for (let i = 0; i < action.payload.data.getTodoFromCategory.length; i++) {
-                    console.log (action.payload.data.getTodoFromCategory[i]);
-                    //ListTODO.caseReducers.addTODO(state,{ text: String(action.payload.data.getTodoFromCategory[i].description), //type: string
-                    //    checked: false,
-                    //    id: String(action.payload.data.getTodoFromCategory[i].id)})
+                    ListTODO.caseReducers.addTODO(state, {
+                        payload: {
+                            text: String(action.payload.data.getTodoFromCategory[i].description),
+                            checked: false,
+                            id: String(action.payload.data.getTodoFromCategory[i].id),
+                        }, type: ""
+                    });
                 }
             }
         });

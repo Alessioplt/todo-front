@@ -1,7 +1,6 @@
 import React from "react";
 import '../../Body/_DashBoard.scss'
-import NavBar from "../../../components/old_core/NavBar";
-import Categories from "../../../components/old_core/Categories";
+import NavBar from "../../../components/core/NavBar";
 import CategoryList from "../../../components/core/CategoryList";
 import CategoryAdd from "../../../components/core/CategoryAdd";
 import ListTodo from "../../../components/dashboard/ListTodo";
@@ -13,8 +12,10 @@ function Dashboard() {
             <NavBar></NavBar>
 
             <div className="flex w-full flex-col main-card-dashboard">
-                <CategoryList></CategoryList>
-                <CategoryAdd></CategoryAdd>
+                <div className="flex w-full flex-row justify-center">
+                    <CategoryList></CategoryList>
+                    <CategoryAdd></CategoryAdd>
+                </div>
                 <Todo></Todo>
             </div>
         </div>

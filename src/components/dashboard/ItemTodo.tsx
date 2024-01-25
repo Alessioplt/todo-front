@@ -3,7 +3,7 @@ import TrashIcon from "../../icons/trash";
 import React from "react";
 import {checkTODO, deleteTodo} from "../../redux/ListTODO";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import DeleteTodoSingle from "../old_core/DeleteTodoSingle";
+import DeleteTodoSingle from "../core/DeleteTodoSingle";
 
 interface todo {
     id: string;

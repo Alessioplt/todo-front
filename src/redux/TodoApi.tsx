@@ -5,7 +5,7 @@ export const fetchTODOByCategoryID = createAsyncThunk(
     'todo/getAllId',
     async (categoryId: string, thunkAPI) => {
         const {data} = await getAllTodoId(categoryId);
-        return data.data;
+        return data;
     }
 )
 

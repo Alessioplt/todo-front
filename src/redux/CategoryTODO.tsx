@@ -11,34 +11,35 @@ interface CategoryState {
 }
 
 const initialState: CategoryState = {
-    categories: [
-    ],
+    categories: [],
 };
 export const categoryTODO = createSlice({
     name: 'todo category',
     initialState,
     reducers: {
         refresh: (state) => {
+            console.log("refreshed")
             state.categories = [];
             fetchCategories();
         },
         addCategory: (state, action) => {
-            console.log("$$debug")
-            console.log(action.payload)
             const newCategory: Category = {
                 id: action.payload.id,
                 title: action.payload.title,
             };
             state.categories = [...state.categories, newCategory];
+            categoryTODO.caseReducers.refresh(state);
         },
         editCategory: (state, action) => {
             const categoryIndex = state.categories.findIndex((category) => category.id === action.payload.id);
             if (categoryIndex !== -1) {
                 state.categories[categoryIndex].title = action.payload.title;
             }
+            categoryTODO.caseReducers.refresh(state);
         },
         deleteCategory: (state, action) => {
             state.categories = state.categories.filter((category) => category.id !== action.payload.id);
+            categoryTODO.caseReducers.refresh(state);
         },
     },
     extraReducers: (builder) => {
@@ -54,7 +55,6 @@ export const categoryTODO = createSlice({
             categoryTODO.caseReducers.deleteCategory(state, action);
         });
         builder.addCase(editCategoryApi.fulfilled, (state, action) => {
-            console.log('edit', action.payload);
             categoryTODO.caseReducers.editCategory(state, action);
         });
     },

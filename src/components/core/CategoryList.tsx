@@ -3,6 +3,7 @@ import {Tab, Tabs} from "@nextui-org/react";
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { updateCategory } from "../../redux/ListTODO";
 import {fetchCategories} from "../../redux/CategoryApi";
+import {fetchTODOByCategoryID} from "../../redux/TodoApi";
 
 
 interface Category {
@@ -19,9 +20,9 @@ function CategoryList() {
     const handleTabChange = (newValue: React.Key) => {
         if (typeof newValue === 'string') {
             dispatch(updateCategory(newValue));
+            dispatch(fetchTODOByCategoryID(newValue))
         }
     };
-
     return (
         <Tabs
             key={"bordered"}

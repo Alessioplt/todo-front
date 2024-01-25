@@ -16,7 +16,7 @@ export const getAllCategory = async () => {
     });
 }
 
-export const ADD = gql`
+export const ADD = `
     mutation categoryCreate($input: CategoryCreateInput!) {
   categoryCreate(input: $input) {
     id,

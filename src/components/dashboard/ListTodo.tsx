@@ -17,17 +17,6 @@ function ListTodo() {
         checked: boolean;
     }
     const todoItem = useAppSelector((state) => state.todo)
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        if (sessionStorage.getItem('token') === null) {
-            console.log("not logged in")
-        }
-        else {
-            dispatch(fetchTODOByCategoryID(todoItem.activeCategory))
-        }
-    }, []);
-
-
     return (
         <CardBody>
             {todoItem.todosToShow.map((todo) => (

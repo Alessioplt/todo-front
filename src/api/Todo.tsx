@@ -46,9 +46,7 @@ export const getAllTodoId = async (categoryId: string) => {
     return axiosInstance.post('/graphql', {
         query: GET_ALL_FROM_ID,
         variables: {
-            input: {
-                categoryId: categoryId
-            }
+            categoryId: categoryId
         }
     });
 }
@@ -102,17 +100,18 @@ export const deleteTODO = async (id: string) => {
     });
 }
 export const EDIT = `
-    mutation updateTodo {
-  updateTodo (input: {
-    title: "Task 2", 
-    description: "Learn NestJs (plsss update)", 
-    status: "0",
-  }, id: "5242a250-d279-4b05-93a2-2cc29313153b") {
-    id,
-    title,
-    description,
-    status
-  }
+    mutation UpdateTodo($id: String!, $title: String!, $description: String!, $status: String!, $categoryId: String!) {
+    updateTodo(input: {
+        title: $title,
+        description: $description,
+        status: $status,
+        categoryId: $categoryId,
+    } id: $id) {
+        id
+        title
+        description
+        status
+    }
 }
     `
 export const editTODO = async (title: string, description: string, status: string, categoryId: string) => {

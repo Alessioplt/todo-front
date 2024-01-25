@@ -11,6 +11,7 @@ function Todo() {
             <Divider/>
             <CardFooter>
                 <TodoDeleteDone/>
+                <>‎ ‎ ‎ ‎ </>
                 <Divider orientation="vertical" />
                 <TodoAdd/>
             </CardFooter>

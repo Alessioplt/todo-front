@@ -7,7 +7,7 @@ function CategoryAdd() {
 
     return (
         <>
-            <Button onPress={onOpen}>Open Modal</Button>
+            <Button onPress={onOpen}>+</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => <CategoryForm onClose={onClose} />}
