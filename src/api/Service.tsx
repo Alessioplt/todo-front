@@ -3,9 +3,6 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
-    /*headers: {
-        'Content-Type': 'application/json',
-    }*/
 });
 
 // Add a request interceptor
@@ -30,7 +27,8 @@ axiosInstance.interceptors.response.use(
 
             if (error.extensions && error.extensions.code === 'UNAUTHENTICATED') {
                 console.error('Unauthorized error:', error.message);
-                //navigate("/")
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('userId');
                 return Promise.reject(error.message);
             }
         }
