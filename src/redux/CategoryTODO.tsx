@@ -44,8 +44,9 @@ export const categoryTODO = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
-            if (action.payload && action.payload.data.getAllCategories) {
-                state.categories = action.payload.data.getAllCategories;
+            console.log(action.payload);
+            if (action.payload && action.payload) {
+                state.categories = action.payload;
             }
         });
         builder.addCase(addCategoryApi.fulfilled, (state, action) => {

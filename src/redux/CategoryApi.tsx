@@ -1,11 +1,18 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {addCategory, deleteCategory, editCategory, getAllCategory} from "../api/Categories";
 
+interface Category {
+    id: string;
+    title: string;
+    userId: string;
+}
 export const fetchCategories = createAsyncThunk(
     'categories/getAll',
     async (thunkAPI) => {
         const {data} = await getAllCategory();
-        return data;
+        const filteredData = data.data.getAllCategories.filter((category: { userId: string | null; }) => category.userId === sessionStorage.getItem('userId'));
+        console.log(filteredData);
+        return filteredData;
     }
 )
 
