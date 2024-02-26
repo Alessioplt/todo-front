@@ -18,7 +18,6 @@ export const categoryTODO = createSlice({
     initialState,
     reducers: {
         refresh: (state) => {
-            console.log("refreshed")
             state.categories = [];
             fetchCategories();
         },
@@ -28,7 +27,6 @@ export const categoryTODO = createSlice({
                 title: action.payload.title,
             };
             state.categories = [...state.categories, newCategory];
-            categoryTODO.caseReducers.refresh(state);
         },
         editCategory: (state, action) => {
             const categoryIndex = state.categories.findIndex((category) => category.id === action.payload.id);
@@ -44,7 +42,6 @@ export const categoryTODO = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
-            console.log(action.payload);
             if (action.payload && action.payload) {
                 state.categories = action.payload;
             }

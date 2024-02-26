@@ -21,8 +21,7 @@ function ItemTodo({ item }: { item: todo }) {
 
     const deleteItem = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        console.log("deleting todo", item)
-        //dispatch(deleteTodo(item.id))
+        dispatch(deleteTodo(item.id))
     };
 
     return (

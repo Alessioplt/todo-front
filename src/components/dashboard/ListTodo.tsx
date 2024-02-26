@@ -20,7 +20,7 @@ function ListTodo() {
     return (
         <CardBody>
             {todoItem.todosToShow.map((todo) => (
-                <ItemTodo item={todo} />
+                <ItemTodo key={todo.id} item={todo} />
             ))}
         </CardBody>
     );

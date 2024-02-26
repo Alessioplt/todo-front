@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {addTodoApi, fetchTODOByCategoryID} from "./TodoApi";
-import listTodo from "../components/dashboard/ListTodo";
-
-let id: number = 10;
+import {fetchTODOByCategoryID} from "./TodoApi";
 
 interface Todo {
     id: string;

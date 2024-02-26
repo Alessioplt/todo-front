@@ -11,7 +11,6 @@ export const fetchCategories = createAsyncThunk(
     async (thunkAPI) => {
         const {data} = await getAllCategory();
         const filteredData = data.data.getAllCategories.filter((category: { userId: string | null; }) => category.userId === sessionStorage.getItem('userId'));
-        console.log(filteredData);
         return filteredData;
     }
 )
@@ -21,7 +20,7 @@ export const addCategoryApi = createAsyncThunk(
     'categories/add',
     async (title: string, thunkAPI) => {
         const {data} = await addCategory(title);
-        return data.data.data.categoryCreate;
+        return data.data.categoryCreate;
     }
 );
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React  from "react";
 import { useDispatch } from "react-redux";
-import { Button, Input } from "@nextui-org/react";
-import {addCategoryApi, deleteCategoryApi} from "../../redux/CategoryApi";
+import { Button } from "@nextui-org/react";
+import {deleteCategoryApi} from "../../redux/CategoryApi";
+import {useAppSelector} from "../../redux/hooks";
 
 interface CategoryFormProps {
     onClose: () => void;
@@ -9,23 +10,23 @@ interface CategoryFormProps {
 
 function ConfirmationForm({ onClose }: CategoryFormProps) {
     const dispatch = useDispatch<any>();
-    const [title, setTitle] = useState("");
+    const activeCategory = useAppSelector((state) => state.todo.activeCategory);
 
     const handleSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
-        dispatch(deleteCategoryApi(title));
-        setTitle("");
+        console.log("Deleting category named: ", activeCategory);
+        dispatch(deleteCategoryApi(activeCategory));
         onClose();
     };
 
     return (
         <div>
-            Are you sure you want to delete this category
+            <text style={{ margin: '10px', padding: '10px' }}>Are you sure you want to delete this category</text>
             <form onSubmit={handleSubmit} className="flex content-between">
-                <Button type="submit" color="primary">
+                <Button type="submit" color="primary" style={{ margin: '10px', padding: '10px' }}>
                     Yes
                 </Button>
-                <Button type="submit" color="primary">
+                <Button type="submit" color="primary" style={{ margin: '10px', padding: '10px' }}>
                     No
                 </Button>
             </form>
