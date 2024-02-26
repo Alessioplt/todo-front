@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
 });
 
-// Add a request interceptor
+// Add a request interceptor@
 axiosInstance.interceptors.request.use(
     (config) => {
         const token = sessionStorage.getItem('token');
@@ -29,6 +29,8 @@ axiosInstance.interceptors.response.use(
                 console.error('Unauthorized error:', error.message);
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('userId');
+                sessionStorage.setItem('errorMessage', 'Session expired. Please log in again.');
+                window.location.href = '/';
                 return Promise.reject(error.message);
             }
         }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardBody, CardFooter, Divider, Link, Input, Button} from "@nextui-org/react";
 import {useNavigate} from "react-router";
 import axiosInstance, {updateAxiosInstance} from "../../api/Service";
@@ -7,7 +7,12 @@ import {login, LOGIN} from "../../api/Auth";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(sessionStorage.getItem('errorMessage') || ""); // Add this line
     const navigate = useNavigate();
+
+    useEffect(() => {
+        sessionStorage.removeItem('errorMessage'); // Clear the error message after it's displayed
+    }, []);
 
     const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -15,7 +20,7 @@ function Login() {
             await loginUser(email, password);
             navigate("/dashboard")
         } catch (err) {
-            console.log("wrong user or password");
+            setErrorMessage("Wrong user or password"); // Update this line
         }
     };
 
@@ -26,8 +31,6 @@ function Login() {
         updateAxiosInstance(true);
     };
 
-
-
     return (
         <Card className="max-w-[400px]">
             <CardBody>
@@ -35,6 +38,7 @@ function Login() {
                     <div className="w-full flex flex-col gap-4">
                         <Input type="email" label="Email" placeholder="Enter your email" isRequired value={email} onChange={(e) => setEmail(e.target.value)} />
                         <Input type="password" label="Password" placeholder="Enter your password" isRequired value={password} onChange={(e) => setPassword(e.target.value)} />
+                        {errorMessage && <p>{errorMessage}</p>} {/* Add this line */}
                         <Button type="submit" color="primary">Login</Button>
                     </div>
                 </form>
