@@ -14,14 +14,13 @@ function ConfirmationForm({ onClose }: CategoryFormProps) {
 
     const handleSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
-        console.log("Deleting category named: ", activeCategory);
         dispatch(deleteCategoryApi(activeCategory));
         onClose();
     };
 
     return (
         <div>
-            <text style={{ margin: '10px', padding: '10px' }}>Are you sure you want to delete this category</text>
+            <p style={{ margin: '10px', padding: '10px' }}>Are you sure you want to delete this category</p>
             <form onSubmit={handleSubmit} className="flex content-between">
                 <Button type="submit" color="primary" style={{ margin: '10px', padding: '10px' }}>
                     Yes

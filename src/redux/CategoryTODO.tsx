@@ -36,12 +36,13 @@ export const categoryTODO = createSlice({
             categoryTODO.caseReducers.refresh(state);
         },
         deleteCategory: (state, action) => {
-            state.categories = state.categories.filter((category) => category.id !== action.payload.id);
-            categoryTODO.caseReducers.refresh(state);
+            const deletedCategoryId = action.payload.data.removeOne.title;
+            state.categories = state.categories.filter(category => category.title !== deletedCategoryId);
         },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
+            console.log("refresh");
             if (action.payload && action.payload) {
                 state.categories = action.payload;
             }

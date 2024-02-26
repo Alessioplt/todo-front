@@ -48,9 +48,7 @@ export const deleteCategory = async (id: string) => {
     return axiosInstance.post('/graphql', {
         query: DELETE,
         variables: {
-            input: {
-                id: id
-            }
+            id: id
         }
     });
 }
