@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {fetchTODOByCategoryID} from "./TodoApi";
+import {addTodoApi, fetchTODOByCategoryID} from "./TodoApi";
 
 interface Todo {
     id: string;
@@ -104,6 +104,15 @@ export const ListTODO = createSlice({
                     });
                 }
             }
+        });
+        builder.addCase(addTodoApi.fulfilled, (state, action) => {
+            ListTODO.caseReducers.addTODO(state, {
+                payload: {
+                    text: action.payload.title,
+                    checked: false,
+                    id: action.payload.id,
+                }, type: ""
+            });
         });
     },
 });

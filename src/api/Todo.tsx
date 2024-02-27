@@ -71,12 +71,10 @@ export const addTodo = async (title: string, description: string, status: string
     return axiosInstance.post('/graphql', {
         query: ADD,
         variables: {
-            input: {
-                title: title,
-                description: description,
-                status: status,
-                categoryId: categoryId
-            }
+            title: title,
+            description: description,
+            status: status,
+            categoryId: categoryId
         }
     });
 }

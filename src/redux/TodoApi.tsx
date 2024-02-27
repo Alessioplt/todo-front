@@ -12,8 +12,13 @@ export const fetchTODOByCategoryID = createAsyncThunk(
 export const addTodoApi = createAsyncThunk(
     'todo/add',
     async (params: any, thunkAPI) => {
-        const {data} = await addTodo(params.title, params.description, params.status, params.categoryId);
-        return data.data.data.categoryCreate;
+        try {
+            const {data} = await addTodo(params.title, params.description, params.status, params.categoryId);
+            return data.data.todoCreate;
+        } catch (error) {
+            console.error('Error occurred:', error);
+            throw error;
+        }
     }
 );
 
